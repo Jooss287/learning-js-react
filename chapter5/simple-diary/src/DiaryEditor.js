@@ -1,6 +1,9 @@
-import {useState} from "react";
+import {useRef, useState} from "react";
 
 const DiaryEditor = ()=>{
+    // react에서 dom 기능을 사용 할 수 있도록 하는 기능 `useRef`
+    const authorInput = useRef();
+    const contentInput = useRef();
 
     const [state, setState] = useState({
         author: "",
@@ -19,11 +22,22 @@ const DiaryEditor = ()=>{
     };
 
     const handleSubmit = () => {
+        if (state.author.length < 1) {
+            authorInput.current.focus();
+            // focus
+            return;
+        }
+        if (state.content.length < 5) {
+            contentInput.current.focus();
+            return;
+        }
+
         console.log(state);
         alert("저장 성공");
     };
 
-    return <div className="DiaryEditor">
+    return (
+    <div className="DiaryEditor">
         <h2>오늘의 일기</h2>
         <div>
             {/* 
@@ -35,10 +49,10 @@ const DiaryEditor = ()=>{
                 });
             }}/>
              */}
-            <input name="author" value={state.author} onChange={handleChangeState}/>
+            <input ref={authorInput} name="author" value={state.author} onChange={handleChangeState}/>
         </div>
         <div>
-            <textarea name="content" value={state.content} onChange={handleChangeState}/>
+            <textarea ref={contentInput} name="content" value={state.content} onChange={handleChangeState}/>
         </div>
         <div>
             <select name="emotion" value={state.emotion} onChange={handleChangeState}>
@@ -53,5 +67,6 @@ const DiaryEditor = ()=>{
             <button onClick={handleSubmit}>일기 저장하기</button>
         </div>
     </div>
+    );
 }
 export default DiaryEditor;
