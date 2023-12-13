@@ -1,6 +1,11 @@
-import {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 const DiaryEditor = ({onCreate})=>{
+
+    useEffect(() => {
+        console.log("DiaryEditor 렌더");
+    });
+
     // react에서 dom 기능을 사용 할 수 있도록 하는 기능 `useRef`
     const authorInput = useRef();
     const contentInput = useRef();
@@ -10,10 +15,11 @@ const DiaryEditor = ({onCreate})=>{
         emotion: 1,
     });
 
+
+
     // rerendering 유발시키고 싶을 때, useState
     // rerendering을 유발시키고 싶지 않을때 useRef or let
     // 일반 상수 대신 useRef를 쓰는 이유: 리렌더링이 될 때 마다 상수는 초기화됨
-
     const handleChangeState = (e)=>{
         console.log(e.target.name);
         console.log(e.target.value);
@@ -76,5 +82,6 @@ const DiaryEditor = ({onCreate})=>{
         </div>
     </div>
     );
-}
-export default DiaryEditor;
+};
+
+export default React.memo(DiaryEditor);
