@@ -33,8 +33,8 @@ const reducer = (state, action) => {
   return newState;
 };
 
-export const DiaryStateContent = React.createContext();
-export const DiaryDispatchContent = React.createContext();
+export const DiaryStateContext = React.createContext();
+export const DiaryDispatchContext = React.createContext();
 
 const dummyData = [
   {
@@ -89,7 +89,7 @@ function App() {
   };
   // remove
   const onRemove = (targetId) => {
-    dispatch({ type: "remove", targetId });
+    dispatch({ type: "REMOVE", targetId });
   };
   // edit
   const onEdit = (targetId, date, content, emotion) => {
@@ -102,8 +102,8 @@ function App() {
   };
 
   return (
-    <DiaryStateContent.Provider value={data}>
-      <DiaryDispatchContent.Provider value={(onCreate, onEdit, onRemove)}>
+    <DiaryStateContext.Provider value={data}>
+      <DiaryDispatchContext.Provider value={{ onCreate, onEdit, onRemove }}>
         <BrowserRouter>
           <div className="App">
             <Routes>
@@ -114,8 +114,8 @@ function App() {
             </Routes>
           </div>
         </BrowserRouter>
-      </DiaryDispatchContent.Provider>
-    </DiaryStateContent.Provider>
+      </DiaryDispatchContext.Provider>
+    </DiaryStateContext.Provider>
   );
 }
 
